@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { isFieldFilled, type Answers, type FieldDef } from "@/lib/applicationForms";
+import { getFieldMaxLength, isFieldFilled, type Answers, type FieldDef } from "@/lib/applicationForms";
 import { goldButtonClasses } from "@/components/Button";
 
 const inputClasses =
@@ -42,6 +42,7 @@ export default function ApplicationForm({
     const [answers, setAnswers] = useState<Answers>({});
     const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
     const [showErrors, setShowErrors] = useState(false);
+    const [honeypot, setHoneypot] = useState("");
 
     const invalidFields = fields.filter((field) => !isFieldFilled(field, answers));
 
@@ -59,7 +60,7 @@ export default function ApplicationForm({
             const res = await fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ answers }),
+                body: JSON.stringify({ answers, honeypot }),
             });
 
             if (!res.ok) throw new Error("Request failed");
@@ -82,6 +83,17 @@ export default function ApplicationForm({
 
     return (
         <form onSubmit={handleSubmit} noValidate className="mt-10 flex flex-col gap-8">
+            <input
+                type="text"
+                name="company"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
+            />
+
             {fields.map((field, index) => {
                 if (field.type === "heading") {
                     return (
@@ -108,6 +120,7 @@ export default function ApplicationForm({
                                 <input
                                     type={field.type}
                                     placeholder={field.placeholder}
+                                    maxLength={getFieldMaxLength(field)}
                                     value={(answers[field.name] as string) ?? ""}
                                     onChange={(e) =>
                                         setAnswers((prev) => ({ ...prev, [field.name]: e.target.value }))
@@ -119,6 +132,7 @@ export default function ApplicationForm({
                             {field.type === "textarea" && (
                                 <textarea
                                     placeholder={field.placeholder}
+                                    maxLength={getFieldMaxLength(field)}
                                     value={(answers[field.name] as string) ?? ""}
                                     onChange={(e) =>
                                         setAnswers((prev) => ({ ...prev, [field.name]: e.target.value }))

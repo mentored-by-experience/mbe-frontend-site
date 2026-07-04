@@ -50,6 +50,41 @@ export function isFieldFilled(field: FieldDef, answers: Answers) {
     return typeof value === "string" && value.trim().length > 0;
 }
 
+const MAX_LENGTH: Record<"text" | "email" | "textarea", number> = {
+    text: 200,
+    email: 254,
+    textarea: 5000,
+};
+
+export function getFieldMaxLength(field: FieldDef): number | undefined {
+    if (field.type === "text" || field.type === "email" || field.type === "textarea") {
+        return MAX_LENGTH[field.type];
+    }
+    return undefined;
+}
+
+export function isFieldTooLong(field: FieldDef, answers: Answers) {
+    if (field.type !== "text" && field.type !== "email" && field.type !== "textarea") {
+        return false;
+    }
+
+    const value = answers[field.name];
+    return typeof value === "string" && value.length > MAX_LENGTH[field.type];
+}
+
+// Google Sheets (and Excel) treat cell values starting with these characters as
+// formulas. Left unsanitized, a submitted answer like `=IMPORTXML(...)` could
+// execute as a live formula for whoever opens the sheet. Prefixing with an
+// apostrophe forces Sheets to treat the value as plain text.
+const FORMULA_TRIGGER_CHARS = new Set(["=", "+", "-", "@", "\t", "\r"]);
+
+function sanitizeForSheets(value: string): string {
+    if (value.length > 0 && FORMULA_TRIGGER_CHARS.has(value[0])) {
+        return `'${value}`;
+    }
+    return value;
+}
+
 export function buildSheetRow(fields: FieldDef[], answers: Answers): string[] {
     const row: string[] = [new Date().toISOString()];
 
@@ -59,11 +94,11 @@ export function buildSheetRow(fields: FieldDef[], answers: Answers): string[] {
         const value = answers[field.name];
 
         if (field.type === "checkboxes") {
-            row.push(Array.isArray(value) ? value.join(", ") : "");
+            row.push(Array.isArray(value) ? sanitizeForSheets(value.join(", ")) : "");
         } else if (field.type === "checkbox") {
             row.push(value ? "Yes" : "No");
         } else {
-            row.push(typeof value === "string" ? value : "");
+            row.push(typeof value === "string" ? sanitizeForSheets(value) : "");
         }
     }
 
