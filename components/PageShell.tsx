@@ -14,7 +14,7 @@ export default function PageShell({
     children: ReactNode;
 }) {
     return (
-        <main className="min-h-screen bg-brand-bg px-6 py-16 text-brand-fg">
+        <main className="px-6 py-16 md:py-24">
             <section className={`mx-auto ${maxWidths[maxWidth]}`}>{children}</section>
         </main>
     );

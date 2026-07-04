@@ -8,7 +8,7 @@ export default function MenteeApplicationPage() {
         <PageShell maxWidth="4xl">
             <BackLink href="/apply">← Back to applications</BackLink>
 
-            <h1 className="mt-8 text-4xl font-bold md:text-6xl">
+            <h1 className="mt-8 text-4xl font-bold tracking-tight md:text-6xl">
                 Apply to be Mentored
             </h1>
 

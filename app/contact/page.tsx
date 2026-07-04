@@ -1,13 +1,14 @@
-import BackLink from "@/components/BackLink";
 import { GoldButton } from "@/components/Button";
 import PageShell from "@/components/PageShell";
 
 export default function ContactPage() {
     return (
         <PageShell maxWidth="3xl">
-            <BackLink href="/">← Back home</BackLink>
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-brand-gold">
+                Get in touch
+            </p>
 
-            <h1 className="mt-8 text-4xl font-bold md:text-6xl">Contact</h1>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">Contact</h1>
 
             <p className="mt-6 text-lg text-brand-muted">
                 For business inquiries, sponsorships, guest requests, or media

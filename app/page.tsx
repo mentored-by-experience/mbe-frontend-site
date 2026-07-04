@@ -1,32 +1,15 @@
-import Image from "next/image";
 import { GoldButton, OutlineButton } from "@/components/Button";
 import { latestVideoEmbedUrl } from "@/lib/embeds";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-brand-bg text-brand-fg">
-      <section className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-6 py-20">
-        <div className="mb-8 flex items-center gap-4">
-          <Image
-            src="/mbe-logo.jpg"
-            alt="Mentored By Experience logo"
-            width={72}
-            height={72}
-            className="rounded-xl shadow-lg"
-            priority
-          />
+    <main>
+      <section className="mx-auto max-w-5xl px-6 py-20 md:py-28">
+        <p className="text-sm font-semibold uppercase tracking-[0.35em] text-brand-gold">
+          Real problems. Better questions. Hard-earned perspective.
+        </p>
 
-          <div>
-            <p className="text-sm uppercase tracking-[0.35em] text-brand-gold">
-              Mentored By Experience
-            </p>
-            <p className="mt-1 text-sm text-brand-muted">
-              Real problems. Better questions. Hard-earned perspective.
-            </p>
-          </div>
-        </div>
-
-        <h1 className="max-w-3xl text-5xl font-bold tracking-tight md:text-7xl">
+        <h1 className="mt-6 max-w-3xl text-5xl font-bold tracking-tight md:text-7xl">
           Lessons earned the hard way.
         </h1>
 
