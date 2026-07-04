@@ -10,6 +10,16 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Brand palette, shared across every page */
+  --color-brand-bg: #120A03;
+  --color-brand-fg: #F4EFE7;
+  --color-brand-muted: #B8A99A;
+  --color-brand-gold: #D8B06A;
+  --color-brand-gold-hover: #E8C782;
+  --color-brand-border: #3A1E0B;
+  --color-brand-outline: #70400F;
+  --color-brand-surface: #241207;
 }
 
 @media (prefers-color-scheme: dark) {
