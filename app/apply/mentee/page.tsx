@@ -1,7 +1,7 @@
 import BackLink from "@/components/BackLink";
-import IframeEmbed from "@/components/IframeEmbed";
 import PageShell from "@/components/PageShell";
-import { tallyMenteeEmbedUrl } from "@/lib/embeds";
+import ApplicationForm from "@/components/form/ApplicationForm";
+import { menteeFields } from "@/lib/applicationForms";
 
 export default function MenteeApplicationPage() {
     return (
@@ -17,7 +17,7 @@ export default function MenteeApplicationPage() {
                 comfortable potentially discussing on a recorded show.
             </p>
 
-            <IframeEmbed src={tallyMenteeEmbedUrl} title="Apply to be mentored" />
+            <ApplicationForm fields={menteeFields} endpoint="/api/apply/mentee" />
         </PageShell>
     );
 }

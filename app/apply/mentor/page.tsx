@@ -1,7 +1,7 @@
 import BackLink from "@/components/BackLink";
-import IframeEmbed from "@/components/IframeEmbed";
 import PageShell from "@/components/PageShell";
-import { tallyMentorEmbedUrl } from "@/lib/embeds";
+import ApplicationForm from "@/components/form/ApplicationForm";
+import { mentorFields } from "@/lib/applicationForms";
 
 export default function MentorApplicationPage() {
     return (
@@ -17,7 +17,7 @@ export default function MentorApplicationPage() {
                 future conversation.
             </p>
 
-            <IframeEmbed src={tallyMentorEmbedUrl} title="Become a guest mentor" />
+            <ApplicationForm fields={mentorFields} endpoint="/api/apply/mentor" />
         </PageShell>
     );
 }
